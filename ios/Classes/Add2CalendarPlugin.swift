@@ -12,11 +12,11 @@ extension Date {
 
 var statusBarStyle = UIApplication.shared.statusBarStyle
 
-public class Add2CalendarPlugin: NSObject, FlutterPlugin {
+public class SwiftAdd2CalendarPlugin: NSObject, FlutterPlugin {
     
     public static func register(with registrar: FlutterPluginRegistrar) {
       let channel = FlutterMethodChannel(name: "add_2_calendar", binaryMessenger: registrar.messenger())
-      let instance = Add2CalendarPlugin()
+      let instance = SwiftAdd2CalendarPlugin()
       registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
@@ -39,8 +39,8 @@ public class Add2CalendarPlugin: NSObject, FlutterPlugin {
         
         
         let title = args["title"] as! String
-        let description = args["desc"] is NSNull ? nil: args["desc"] as! String
-        let location = args["location"] is NSNull ? nil: args["location"] as! String
+        let description = args["desc"] is NSNull ? nil: args["desc"] as? String
+        let location = args["location"] is NSNull ? nil: args["location"] as? String
         let timeZone = args["timeZone"] is NSNull ? nil: TimeZone(identifier: args["timeZone"] as! String)
         let startDate = Date(milliseconds: (args["startDate"] as! Double))
         let endDate = Date(milliseconds: (args["endDate"] as! Double))
@@ -156,7 +156,7 @@ public class Add2CalendarPlugin: NSObject, FlutterPlugin {
     }
 }
 
-extension Add2CalendarPlugin: EKEventEditViewDelegate {
+extension SwiftAdd2CalendarPlugin: EKEventEditViewDelegate {
     
     public func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
         controller.dismiss(animated: true, completion: {
